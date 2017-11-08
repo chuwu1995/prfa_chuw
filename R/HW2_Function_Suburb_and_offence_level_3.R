@@ -54,7 +54,11 @@ compareSuburbs <- function(crime_data, offence_description, suburbs) {
   plot_data <- dcast(plot_data, date ~ suburb, fun = sum,
                      fill = 0, value.var = "total_offence_count")
 
+
   # Generate the plot
+  suburb<-suburbs[1]
+  suburb_compare<-suburbs[2]
+
   ggplot(plot_data, aes(x=date),fill=c(x,y)) +
     geom_line(aes(y=y,colour=suburb)) +
     geom_line(aes(y=x,colour=suburb_compare)) +
