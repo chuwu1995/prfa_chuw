@@ -1,6 +1,6 @@
 ## QUESTION ----
 
-#' Crime Crime Compare Function
+#' Function to Compare Crime in Two Suburbs
 #'
 #' \code{<compareSuburbs>} <This function draw a plot to compare the crime aomunt of two suburbs.>
 #' @param crime_data A data.table object with the following columns:
@@ -19,17 +19,13 @@ compareSuburbs <- function(crime_data, offence_description, suburbs) {
   require(data.table)
   require(ggplot2)
 
-
   # Error catching
-
-  if (length(suburbs)!=2) {
+  if (length(suburbs) != 2) {
     stop("Please enter two suburbs")
   }
 
-
   expected_colnames <- c("date", "suburb", "postcode", "offence_level_1", "offence_level_2",
                          "offence_level_3", "offence_count")
-
 
   if (!all.equal(names(crime_data), expected_colnames)) {
     stop(paste("Input table columns need to match: ",
@@ -45,7 +41,7 @@ compareSuburbs <- function(crime_data, offence_description, suburbs) {
   # Make a data table for plotting using data.table transformations
   # You will need to filter, summarise and group by
   # Expect cols: "date", "suburb", "total_offence_count"
-  plot_data <- crime_data[suburb %in% suburbs & offence_level_3==offence_description,list(total_offence_count = sum(offence_count)),by=list(suburb,date = month(date))]
+  plot_data <- crime_data[suburb %in% suburbs & offence_level_3 == offence_description, list(total_offence_count = sum(offence_count)), by = list(suburb, date = month(date))]
 
   # These lines will transform the plot_data structure to allow us to plot
   # correlations. Try them out
@@ -54,15 +50,14 @@ compareSuburbs <- function(crime_data, offence_description, suburbs) {
   plot_data <- dcast(plot_data, date ~ suburb, fun = sum,
                      fill = 0, value.var = "total_offence_count")
 
-
   # Generate the plot
-  suburb<-suburbs[1]
-  suburb_compare<-suburbs[2]
+  suburb <- suburbs[1]
+  suburb_compare <- suburbs[2]
 
-  ggplot(plot_data, aes(x=date)) +
-    geom_line(aes(y=y,colour=suburb)) +
-    geom_line(aes(y=x,colour=suburb_compare)) +
-    scale_x_continuous(name="Time Line (Month)",breaks=c(1:12)) +
+  ggplot(plot_data, aes(x = date)) +
+    geom_line(aes(y = y, colour = suburb)) +
+    geom_line(aes(y = x, colour = suburb_compare)) +
+    scale_x_continuous(name = "Time Line (Month)", breaks = c(1:12)) +
     labs(y = offence_description)
 }
 
