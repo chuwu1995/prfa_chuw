@@ -59,7 +59,7 @@ compareSuburbs <- function(crime_data, offence_description, suburbs) {
   suburb<-suburbs[1]
   suburb_compare<-suburbs[2]
 
-  ggplot(plot_data, aes(x=date),fill=c(x,y)) +
+  ggplot(plot_data, aes(x=date)) +
     geom_line(aes(y=y,colour=suburb)) +
     geom_line(aes(y=x,colour=suburb_compare)) +
     scale_x_continuous(name="Time Line (Month)",breaks=c(1:12)) +
