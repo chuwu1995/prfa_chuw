@@ -2,7 +2,7 @@
 
 #' Function to Compare Crime in Two Suburbs
 #'
-#' \code{<compareSuburbs>} <This function draw a plot to compare the crime aomunt of two suburbs.>
+#' \code{<compare_suburbs>} <This function draw a plot to compare the crime aomunt of two suburbs.>
 #' @param crime_data A data.table object with the following columns:
 #'     "date" (POSIXct), "suburb" (chr), "postcode" (chr), "offence_level_1" (chr),
 #'     "offence_level_2" (chr), "offence_level_3" (chr), "offence_count" (num).
@@ -15,7 +15,7 @@
 #'    "LONSDALE" and "REYNELLA" as suburbs. You will see a ggplot objects showing the trend of crime
 #'    in the two subrubs.
 #'
-compareSuburbs <- function(crime_data, offence_description, suburbs) {
+compare_suburbs <- function(crime_data, offence_description, suburbs) {
   require(data.table)
   require(ggplot2)
 
@@ -52,11 +52,11 @@ compareSuburbs <- function(crime_data, offence_description, suburbs) {
 
   # Generate the plot
   suburb <- suburbs[1]
-  suburb_compare <- suburbs[2]
+  suburb_to_compare <- suburbs[2]
 
   ggplot(plot_data, aes(x = date)) +
     geom_line(aes(y = y, colour = suburb)) +
-    geom_line(aes(y = x, colour = suburb_compare)) +
+    geom_line(aes(y = x, colour = suburb_to_compare)) +
     scale_x_continuous(name = "Time Line (Month)", breaks = c(1:12)) +
     labs(y = offence_description)
 }
