@@ -54,8 +54,8 @@ compare_suburbs <- function(crime_data, offence_description, suburbs) {
   # Generate the plot
   suburb <- suburbs[1]
   suburb_to_compare <- suburbs[2]
-  min_data <- min(crime$date)
-  max_data <- max(crime$date)
+  min_data <- min(crime_data$date)
+  max_data <- max(crime_data$date)
 
   return_plot <- ggplot(plot_data, aes(x = factor(date), group = 1)) +
     geom_line(aes(y = x, colour = suburb)) +
