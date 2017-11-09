@@ -1,6 +1,6 @@
 ## QUESTION ----
 
-#' Function to Compare Crime in Two Suburbs
+#' Function to Compare Crime Count in Two Suburbs
 #'
 #' \code{<compare_suburbs>} <This function draw a plot to compare the crime aomunt of two suburbs.>
 #' @param crime_data A data.table object with the following columns:
@@ -41,7 +41,8 @@ compare_suburbs <- function(crime_data, offence_description, suburbs) {
   # Make a data table for plotting using data.table transformations
   # You will need to filter, summarise and group by
   # Expect cols: "date", "suburb", "total_offence_count"
-  plot_data <- crime_data[suburb %in% suburbs & offence_level_3 == offence_description, list(total_offence_count = sum(offence_count)), by = list(suburb, date = month(date))]
+  plot_data <- crime_data[suburb %in% suburbs & offence_level_3 == offence_description, list(total_offence_count = sum(offence_count)), by = list(suburb, date)]
+  plot_data[,date := strftime(plot_data$date, "%Y/%m") ]
 
   # These lines will transform the plot_data structure to allow us to plot
   # correlations. Try them out
@@ -53,12 +54,17 @@ compare_suburbs <- function(crime_data, offence_description, suburbs) {
   # Generate the plot
   suburb <- suburbs[1]
   suburb_to_compare <- suburbs[2]
+  min_data <- min(crime$date)
+  max_data <- max(crime$date)
 
-  ggplot(plot_data, aes(x = date)) +
+  return_plot <- ggplot(plot_data, aes(x = factor(date), group = 1)) +
     geom_line(aes(y = y, colour = suburb)) +
     geom_line(aes(y = x, colour = suburb_to_compare)) +
-    scale_x_continuous(name = "Time Line (Month)", breaks = c(1:12)) +
-    labs(y = offence_description)
+    scale_x_discrete(name = "Time Line") +
+    labs(y = offence_description, title = "Crim Count", subtitle = paste("(", min_data, " ~ ", max_data, ")"))
+
+  return(return_plot)
+}
 }
 
 
