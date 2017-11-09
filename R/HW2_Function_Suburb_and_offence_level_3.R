@@ -61,7 +61,7 @@ compare_suburbs <- function(crime_data, offence_description, suburbs) {
     geom_line(aes(y = x, colour = suburb)) +
     geom_line(aes(y = y, colour = suburb_to_compare)) +
     scale_x_discrete(name = "Time Line") +
-    labs(y = offence_description, title = "Crim Count", subtitle = paste("(", min_data, " ~ ", max_data, ")"))
+    labs(y = offence_description, title = "Crime Count", subtitle = paste("(", min_data, " ~ ", max_data, ")"))
 
   return(return_plot)
 }
