@@ -65,7 +65,8 @@ compare_suburbs <- function(crime_data, offence_description, suburbs) {
 
   return(return_plot)
 }
-}
+
+
 
 
 
