@@ -58,8 +58,8 @@ compare_suburbs <- function(crime_data, offence_description, suburbs) {
   max_data <- max(crime$date)
 
   return_plot <- ggplot(plot_data, aes(x = factor(date), group = 1)) +
-    geom_line(aes(y = y, colour = suburb)) +
-    geom_line(aes(y = x, colour = suburb_to_compare)) +
+    geom_line(aes(y = x, colour = suburb)) +
+    geom_line(aes(y = y, colour = suburb_to_compare)) +
     scale_x_discrete(name = "Time Line") +
     labs(y = offence_description, title = "Crim Count", subtitle = paste("(", min_data, " ~ ", max_data, ")"))
 
